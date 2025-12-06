@@ -54,10 +54,6 @@ coverage.xml
 # pyenv
 .python-version
 
-# 项目特定配置文件
-key_mappings.json
-wheel_tool_config.json
-
 # 日志文件
 *.log
 logs/

@@ -1,0 +1,33 @@
+{
+  "window": {
+    "alpha": 1.0,
+    "size": 320,
+    "center_on_screen": true
+  },
+  "display": {
+    "fade_step": 25,
+    "hide_delay": 800
+  },
+  "hint_overlay": {
+    "enabled": true,
+    "width": 200,
+    "height": 60,
+    "alpha": 0.7,
+    "display_duration": 1000,
+    "bottom_margin": 50,
+    "font_size": 18,
+    "background_color": "#2a2a2a",
+    "text_color": "#ffffff",
+    "border_radius": 12
+  },
+  "hotkeys": {
+    "next_mode": "f19",
+    "prev_mode": "f18",
+    "open_settings": "ctrl+alt+shift+s",
+    "hide_disk": "esc"
+  },
+  "tray": {
+    "enable": true,
+    "show_notifications": false
+  }
+}

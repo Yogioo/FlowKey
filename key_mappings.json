@@ -1,0 +1,162 @@
+{
+  "浏览模式": {
+    "enabled": true,
+    "mappings": [
+      {
+        "source": "f16",
+        "target": "ctrl+w",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "关闭"
+      },
+      {
+        "source": "f20",
+        "target": "up:1",
+        "block": false,
+        "action_type": "mouse_scroll",
+        "hint": "上"
+      },
+      {
+        "source": "f21",
+        "target": "down:1",
+        "block": false,
+        "action_type": "mouse_scroll",
+        "hint": "下"
+      },
+      {
+        "source": "f23",
+        "target": "ctrl+shift+tab",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "上个标签"
+      },
+      {
+        "source": "f24",
+        "target": "ctrl+tab",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "下个标签"
+      }
+    ]
+  },
+  "影音模式": {
+    "enabled": true,
+    "mappings": [
+      {
+        "source": "f16",
+        "target": "ctrl+alt+p",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "播放/暂停"
+      },
+      {
+        "source": "f23",
+        "target": "ctrl+alt+left",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "上一首"
+      },
+      {
+        "source": "f24",
+        "target": "ctrl+alt+right",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "下一首"
+      },
+      {
+        "source": "f20",
+        "target": "ctrl+alt+left",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "音量-"
+      },
+      {
+        "source": "f21",
+        "target": "ctrl+alt+right",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "音量+"
+      }
+    ]
+  },
+  "视频模式": {
+    "enabled": true,
+    "mappings": [
+      {
+        "source": "f16",
+        "target": "space",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "空格"
+      },
+      {
+        "source": "f20",
+        "target": "left",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "后退"
+      },
+      {
+        "source": "f21",
+        "target": "right",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "前进"
+      },
+      {
+        "source": "f23",
+        "target": "page_up",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "上翻页"
+      },
+      {
+        "source": "f24",
+        "target": "page_down",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "下翻页"
+      }
+    ]
+  },
+  "窗口管理": {
+    "enabled": true,
+    "mappings": [
+      {
+        "source": "f16",
+        "target": "win+d",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "桌面"
+      },
+      {
+        "source": "f20",
+        "target": "win+ctrl+left",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "左虚拟屏幕"
+      },
+      {
+        "source": "f21",
+        "target": "win+ctrl+right",
+        "block": true,
+        "action_type": "keyboard",
+        "hint": "右虚拟屏幕"
+      },
+      {
+        "source": "f23",
+        "target": "prev",
+        "block": true,
+        "action_type": "window_cycle",
+        "hint": "上个窗口"
+      },
+      {
+        "source": "f24",
+        "target": "next",
+        "block": true,
+        "action_type": "window_cycle",
+        "hint": "下个窗口"
+      }
+    ]
+  }
+}
