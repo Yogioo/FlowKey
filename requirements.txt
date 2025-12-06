@@ -1,0 +1,6 @@
+pynput
+keyboard
+pystray
+pillow
+comtypes
+setuptools<81.0
