@@ -968,6 +968,7 @@ class MappingPanel(BasePanel):
         # 保存高级设置
         try:
             from wheel_tool.config.settings import GlobalConfig
+            from wheel_tool.system.startup_manager import StartupManager
 
             # 保存提示显示设置
             GlobalConfig.set('hint_overlay.enabled', self.hint_enabled_var.get())
@@ -1016,6 +1017,18 @@ class MappingPanel(BasePanel):
             GlobalConfig.set('hotkeys.prev_mode', self.hotkey_prev_var.get().strip())
             GlobalConfig.set('hotkeys.open_settings', self.hotkey_settings_var.get().strip())
             GlobalConfig.set('hotkeys.hide_disk', self.hotkey_hide_var.get().strip())
+
+            # 保存开机启动设置
+            startup_enabled = self.startup_enabled_var.get()
+            GlobalConfig.set('startup.enabled', startup_enabled)
+
+            # 应用开机启动设置到系统
+            if startup_enabled:
+                if not StartupManager.enable():
+                    messagebox.showerror("错误", "启用开机启动失败，请检查系统权限")
+            else:
+                if not StartupManager.disable():
+                    messagebox.showerror("错误", "禁用开机启动失败，请检查系统权限")
 
             # 保存到文件
             GlobalConfig.save()
@@ -1306,3 +1319,46 @@ class MappingPanel(BasePanel):
 
         self.create_label(tip_frame, "💡 提示: 修改热键后需要重启程序才能生效",
                          8, "warning").pack(anchor="w")
+
+        # === 开机启动设置 ===
+        startup_section = tk.Frame(advanced_inner, bg=self.colors["bg_secondary"])
+        startup_section.pack(fill="x", pady=(15, 0))
+
+        self.create_label(startup_section, "🚀 开机启动设置", 9, "accent", bold=True).pack(anchor="w", pady=(0, 8))
+
+        # 开机启动开关
+        startup_row = tk.Frame(startup_section, bg=self.colors["bg_secondary"])
+        startup_row.pack(fill="x", pady=3)
+
+        # 从StartupManager获取实际状态
+        from wheel_tool.system.startup_manager import StartupManager
+        actual_startup_enabled = StartupManager.is_enabled()
+
+        # 如果配置文件中的状态与实际状态不一致，以实际状态为准
+        config_startup_enabled = config.get('startup', {}).get('enabled', False)
+        if actual_startup_enabled != config_startup_enabled:
+            # 同步配置文件
+            GlobalConfig.set('startup.enabled', actual_startup_enabled)
+            GlobalConfig.save()
+
+        self.startup_enabled_var = tk.BooleanVar(value=actual_startup_enabled)
+        startup_enabled_btn = tk.Checkbutton(
+            startup_row, text="开机自动启动",
+            variable=self.startup_enabled_var,
+            bg=self.colors["bg_secondary"], fg=self.colors["text"],
+            selectcolor=self.colors["bg"],
+            activebackground=self.colors["bg_secondary"],
+            activeforeground=self.colors["text"],
+            font=("Microsoft YaHei UI", 9),
+            cursor="hand2"
+        )
+        startup_enabled_btn.pack(side="left", padx=(0, 10))
+
+        # 状态提示
+        startup_status_label = self.create_label(
+            startup_row,
+            "启用后程序将在Windows登录时自动运行",
+            8,
+            "text_dim"
+        )
+        startup_status_label.pack(side="left")

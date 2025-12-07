@@ -12,14 +12,14 @@
       {
         "source": "f20",
         "target": "up:1",
-        "block": false,
+        "block": true,
         "action_type": "mouse_scroll",
         "hint": "上"
       },
       {
         "source": "f21",
         "target": "down:1",
-        "block": false,
+        "block": true,
         "action_type": "mouse_scroll",
         "hint": "下"
       },

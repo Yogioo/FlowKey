@@ -29,5 +29,8 @@
   "tray": {
     "enable": true,
     "show_notifications": false
+  },
+  "startup": {
+    "enabled": true
   }
 }

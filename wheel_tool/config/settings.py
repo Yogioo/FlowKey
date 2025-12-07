@@ -51,6 +51,9 @@ class AppSettings:
             "tray": {
                 "enable": True,
                 "show_notifications": False
+            },
+            "startup": {
+                "enabled": False
             }
         }
 

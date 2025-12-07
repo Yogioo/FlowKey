@@ -55,20 +55,20 @@ def setup_logging():
 def initialize_components():
     """初始化所有组件"""
     logger = logging.getLogger(__name__)
-    
+
     try:
         # 1. 初始化模式管理器
         logger.info("初始化模式管理器...")
         mode_manager = ModeManager()
-        
+
         # 2. 初始化圆盘界面
         logger.info("初始化圆盘界面...")
         disk = WheelDisk()
-        
+
         # 3. 初始化模式控制器
         logger.info("初始化模式控制器...")
         controller = ModeController(disk)
-        
+
         # 4. 初始化设置面板（需要在热键监听器之前创建）
         logger.info("初始化设置面板...")
         settings_panel = MappingPanel(mode_manager)
@@ -76,13 +76,13 @@ def initialize_components():
         # 5. 初始化热键监听器
         logger.info("初始化热键监听器...")
         listener = HotkeyListener(disk, controller, mode_manager, settings_panel)
-        
+
         # 6. 初始化全局配置
         logger.info("加载全局配置...")
         config = GlobalConfig()
-        
+
         logger.info("所有组件初始化完成")
-        
+
         return {
             'mode_manager': mode_manager,
             'disk': disk,
@@ -90,10 +90,46 @@ def initialize_components():
             'settings_panel': settings_panel,
             'config': config
         }
-        
+
     except Exception as e:
         logger.error(f"组件初始化失败: {e}")
         raise
+
+
+def sync_startup_setting():
+    """同步开机启动设置"""
+    logger = logging.getLogger(__name__)
+
+    try:
+        from wheel_tool.system.startup_manager import StartupManager
+
+        # 加载配置
+        config = GlobalConfig.load()
+        config_enabled = config.get('startup', {}).get('enabled', False)
+
+        # 获取实际系统状态
+        actual_enabled = StartupManager.is_enabled()
+
+        # 如果配置与实际状态不一致，以配置为准，重新应用
+        if config_enabled != actual_enabled:
+            logger.info(f"同步开机启动设置: 配置={config_enabled}, 实际={actual_enabled}")
+
+            if config_enabled:
+                if StartupManager.enable():
+                    logger.info("✅ 已启用开机启动")
+                else:
+                    logger.warning("⚠ 启用开机启动失败")
+            else:
+                if StartupManager.disable():
+                    logger.info("✅ 已禁用开机启动")
+                else:
+                    logger.warning("⚠ 禁用开机启动失败")
+        else:
+            logger.info(f"开机启动设置已同步: {config_enabled}")
+
+    except Exception as e:
+        logger.error(f"同步开机启动设置失败: {e}")
+
 
 
 def create_application():
@@ -156,19 +192,22 @@ def main():
     logger.info("启动圆盘模式切换工具 v2.0")
     logger.info("模块化架构版本")
     logger.info("=" * 60)
-    
+
     try:
         # 检查依赖
         if not check_dependencies():
             sys.exit(1)
-        
+
+        # 同步开机启动设置
+        sync_startup_setting()
+
         # 创建应用程序
         app, config = create_application()
-        
+
         # 启动应用程序
         logger.info("启动应用程序...")
         app.start()
-        
+
     except KeyboardInterrupt:
         logger.info("用户主动退出程序")
     except Exception as e:
